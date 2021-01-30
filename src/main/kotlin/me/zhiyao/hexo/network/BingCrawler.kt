@@ -98,6 +98,16 @@ object BingCrawler {
             }
         }
 
+        if (!localDate.isEqual(LocalDate.now())) {
+            logger.info("seems date from response is not correct, sleep 10s and try it later...")
+            try {
+                TimeUnit.SECONDS.sleep(10)
+            } catch (ex: InterruptedException) {
+                logger.error("something wrong in thread sleep")
+            }
+            return getImage()
+        }
+
         val copyright = image.copyright
         val description = image.title
 
